@@ -662,24 +662,24 @@ class KtvSession
 
         ControlFactory::add_text_field($defs,
             $handler, $add_params,
-            'user_name', 'Subscription:',
-            $user_name, true, false, false, 500);
+            'user_name', 'Абонемент:',
+            $user_name, true, false, false, 1, 600, 0);
 
         ControlFactory::add_text_field($defs,
             $handler, $add_params,
-            'password', 'Password:',
-            $password, true, true, false, 500);
+            'password', 'Пароль:',
+            $password, true, true, false, 1, 600, 0);
 
-        ControlFactory::add_vgap($defs, 50);
+        ControlFactory::add_vgap($defs, 100);
 
         ControlFactory::add_button($defs,
             $handler, $add_params,
-            'apply_subscription', null, 'Apply', 300);
+            'apply_subscription', null, 'Применить', 300);
 
         ControlFactory::add_vgap($defs, -3);
 
         ControlFactory::add_close_dialog_button($defs,
-            'Cancel', 300);
+            'Отмена', 300);
 
         return $defs;
     }
@@ -688,7 +688,7 @@ class KtvSession
         &$plugin_cookies, $handler, $add_params = null)
     {
         return ActionFactory::show_dialog(
-            'Enter Kartina.TV Subscription',
+            'Введите данные або Kartina.TV',
             $this->do_get_edit_subscription_defs(
                 $plugin_cookies, $handler, $add_params),
             true);
@@ -708,7 +708,7 @@ class KtvSession
                 'need_close_dialog' => false,
                 'action' =>
                     ActionFactory::show_error(false,
-                        'Error',
+                        'Ошибка',
                         array('Subscription should be non-empty.')));
         }
 
