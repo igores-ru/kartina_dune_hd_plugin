@@ -55,7 +55,7 @@ class DefaultChannel implements Channel
     { return 14 * 86400; }
 
     public function get_archive_delay_sec()
-    { return 31 * 60; }
+    { return 16* 60; }
 
     public function get_buffering_ms()
     { return 0; }
