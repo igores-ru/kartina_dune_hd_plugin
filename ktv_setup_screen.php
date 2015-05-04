@@ -12,7 +12,7 @@ class KtvSetupScreen extends AbstractControlsScreen
     ///////////////////////////////////////////////////////////////////////
 
     private $session;
-
+	
     ///////////////////////////////////////////////////////////////////////
 
     public function __construct($session)
@@ -34,26 +34,26 @@ class KtvSetupScreen extends AbstractControlsScreen
         $defs = array();
 
         $this->add_text_field($defs,
-            'current_pcode', 'Current code:',
-            '', true, true, false, 500);
+            'current_pcode', 'Текущий код:',
+            '', true, true, false, 1, 500);
 
         $this->add_text_field($defs,
-            'new_pcode', 'New code:',
-            '', true, true, false, 500);
+            'new_pcode', 'Новый код:',
+            '', true, true, false, 1, 500);
 
         $this->add_text_field($defs,
-            'new_pcode_copy', 'Confirmation:',
-            '', true, true, false, 500);
+            'new_pcode_copy', 'Подтвердить:',
+            '', true, true, false, 1, 500);
 
         $this->add_vgap($defs, 50);
 
         $this->add_button($defs,
-            'apply_pcode', null, 'Apply', 300);
+            'apply_pcode', null, 'Применить', 300);
 
         $this->add_vgap($defs, -3);
 
         $this->add_close_dialog_button($defs,
-            'Cancel', 300);
+            'Отмена', 300);
 
         return $defs;
     }
@@ -61,7 +61,7 @@ class KtvSetupScreen extends AbstractControlsScreen
     private function do_get_edit_pcode_action()
     {
         return ActionFactory::show_dialog(
-            'Change code for protected channels',
+            'Изменение кода закрытых каналов',
             $this->do_get_edit_pcode_defs(),
             true);
     }
@@ -108,13 +108,13 @@ class KtvSetupScreen extends AbstractControlsScreen
         }
 
         $this->add_label($defs,
-            'Subscription:', $login_str);
+            'Абонемент:', $login_str);
 
         $this->add_label($defs,
-            'Expires:', $expires_str);
+            'Истекает:', $expires_str);
 
         $this->add_button($defs, 'edit_subscription', null,
-            'Edit Subscription...', 0);
+            'Редактировать абонемент...', 700);
 
         $settings = $this->session->get_settings();
 
@@ -139,8 +139,7 @@ class KtvSetupScreen extends AbstractControlsScreen
             $bitrate_caption = $bitrate;
 
             $http_caching = $settings->http_caching->value;
-            $http_caching_caption =
-                $this->get_http_caching_caption($http_caching);
+			$http_caching_caption = $http_caching;
 
             $timeshift = $settings->timeshift->value;
             $timeshift_caption = $timeshift;
@@ -148,50 +147,53 @@ class KtvSetupScreen extends AbstractControlsScreen
 
         if ($logged_in)
         {
-            $this->add_button($defs, 'edit_pcode', 'Code for protected channels:',
-                'Edit...', 0);
+            $this->add_button($defs, 'edit_pcode', 'Код для закрытых каналов:',
+                'Изменить...', 700);
 
             $stream_server_ops = array();
             foreach ($settings->stream_server->list as $pair)
                 $stream_server_ops[$pair->ip] = $pair->descr;
             $this->add_combobox($defs,
-                'stream_server', 'Streaming server:',
-                $stream_server, $stream_server_ops, 0, true);
+                'stream_server', 'Сервер вещания:',
+                $stream_server, $stream_server_ops, 700, true);
 
             $bitrate_ops = array();
             foreach ($settings->bitrate->list as $v)
                 $bitrate_ops[$v] = $v;
             $this->add_combobox($defs,
-                'bitrate', 'Bitrate:',
-                $bitrate, $bitrate_ops, 0, true);
+                'bitrate', 'Битрейт:',
+                $bitrate, $bitrate_ops, 700, true);
 
             $http_caching_ops = array();
-            foreach ($settings->http_caching->{'0'} as $v)
+#           foreach ($settings->http_caching->{"0"} as $v)
+			foreach ($settings->http_caching->list as $v)
                 $http_caching_ops[$v] = $this->get_http_caching_caption($v);
             $this->add_combobox($defs,
-                'http_caching', 'Buffering period:',
-                $http_caching, $http_caching_ops, 0, true);
+                'http_caching', 'Время буфферизации:',
+                $http_caching, $http_caching_ops, 700, true);
+
+			
 
             $timeshift_ops = array();
             foreach ($settings->timeshift->list as $v)
                 $timeshift_ops[$v] = $v;
             $this->add_combobox($defs,
-                'timeshift', 'Time shift (hours):',
-                $timeshift, $timeshift_ops, 0, true);
+                'timeshift', 'Задержка по времени (часы):',
+                $timeshift, $timeshift_ops, 700, true);
         }
         else
         {
             $this->add_label($defs,
-                'Code for protected channels:', 'not available');
+                'Код для закрытых каналов:', 'not available');
 
             $this->add_label($defs,
-                'Streaming server:', $stream_server_caption);
+                'Сервер вещания:', $stream_server_caption);
             $this->add_label($defs,
-                'Bitrate:', $bitrate_caption);
+                'Битрейт:', $bitrate_caption);
             $this->add_label($defs,
-                'Buffering period:', $http_caching_caption);
+                'Время буфферизации:', $http_caching_caption);
             $this->add_label($defs,
-                'Time shift (hours):', $timeshift_caption);
+                'Задержка по времени (часы):', $timeshift_caption);
         }
 
         if (isset($plugin_cookies->show_in_main_screen))
@@ -200,11 +202,11 @@ class KtvSetupScreen extends AbstractControlsScreen
             $show_in_main_screen = 'auto';
 
         $show_ops = array();
-        $show_ops['auto'] = 'Auto';
-        $show_ops['yes'] = 'Yes';
-        $show_ops['no'] = 'No';
+        $show_ops['auto'] = 'Автоматически';
+        $show_ops['yes'] = 'Да';
+        $show_ops['no'] = 'Нет';
         $this->add_combobox($defs,
-            'show_in_main_screen', 'Show in main screen:',
+            'show_in_main_screen', 'Показывать в главном меню:',
             $show_in_main_screen, $show_ops, 0, true);
 
         return $defs;
