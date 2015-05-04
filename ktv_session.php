@@ -9,7 +9,7 @@ class KTV
 }
 
 const KTV_LOGIN_URL =
-    'http://%s/api/json/login?login=%s&pass=%s&settings=all';
+    'http://%s/api/json/login?login=%s&pass=%s&settings=all&softid=dune-001';
 
 const KTV_CHANNEL_LIST_URL =
     'http://%s/api/json/channel_list?%s=%s';
