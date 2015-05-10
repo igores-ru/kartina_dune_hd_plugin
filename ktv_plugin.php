@@ -99,7 +99,7 @@ class KtvPlugin extends DefaultDunePlugin
                     ViewItemParams::icon_valign => VALIGN_CENTER,
                     ViewItemParams::item_paint_caption => false,
                     ViewItemParams::icon_scale_factor => 1.0,
-                    ViewItemParams::icon_sel_scale_factor => 1.2,
+                    ViewItemParams::icon_sel_scale_factor => 1.25,
                 ),
 
                 PluginRegularFolderView::not_loaded_view_item_params => array
@@ -118,6 +118,9 @@ class KtvPlugin extends DefaultDunePlugin
                 (
                     ViewParams::num_cols => 4,
                     ViewParams::num_rows => 3,
+					ViewParams::icon_selection_box_width => 355,
+                    ViewParams::icon_selection_box_height => 200,
+                    ViewParams::icon_selection_box_dy => -95,
                 ),
 
                 PluginRegularFolderView::base_view_item_params => array

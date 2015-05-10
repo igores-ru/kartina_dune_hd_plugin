@@ -5,14 +5,35 @@ class ShortMovie
     public $id;
     public $name;
     public $poster_url;
-
+	
+	private function str_remove_spec($str)
+    {
+		$str = str_replace('&#187;', '»', $str);
+		$str = str_replace('&#171;', '«', $str);
+		$str = str_replace("&#8212;","-",$str);
+		$str = str_replace('&#39;', "'", $str);
+		$str = str_replace('&#039;', "'", $str);
+		$str = str_replace('&quot;', '"', $str);
+		$str = str_replace('&amp;', "&", $str);
+		$str = str_replace('&laquo;', '«', $str);
+		$str = str_replace('&raquo;', '»', $str);
+		$str = str_replace('&#151;', "-", $str);
+		$str = str_replace('&#039;', "'", $str);
+		$str = str_replace('&nbsp;', ' ', $str);
+		$str = str_replace('&#133;', '...', $str);
+		$str = str_replace('&#233;', 'é', $str);
+		$str = str_replace('&middot;', '·', $str);
+     
+        return $str;
+    }
+	
     public function __construct($id, $name, $poster_url)
     {
         if (is_null($id))
             throw new Exception("ShortMovie::id is null");
 
         $this->id = strval($id);
-        $this->name = strval($name);
+        $this->name = strval($this->str_remove_spec($name));
         $this->poster_url = strval($poster_url);
     }
 }
@@ -22,7 +43,7 @@ class ShortMovieRange
     public $from_ndx;
     public $total;
     public $short_movies;
-
+	
     public function __construct($from_ndx, $total, $short_movies = null)
     {
         $this->from_ndx = intval($from_ndx);
@@ -91,7 +112,26 @@ class Movie
         $v = intval($v);
         return $v <= 0 ? $default_value : $v;
     }
-
+	private function str_remove_spec($str)
+    {
+		$str = str_replace('&#187;', '»', $str);
+		$str = str_replace('&#171;', '«', $str);
+		$str = str_replace("&#8212;","-",$str);
+		$str = str_replace('&#39;', "'", $str);
+		$str = str_replace('&#039;', "'", $str);
+		$str = str_replace('&quot;', '"', $str);
+		$str = str_replace('&amp;', "&", $str);
+		$str = str_replace('&laquo;', '«', $str);
+		$str = str_replace('&raquo;', '»', $str);
+		$str = str_replace('&#151;', "-", $str);
+		$str = str_replace('&#039;', "'", $str);
+		$str = str_replace('&nbsp;', ' ', $str);
+		$str = str_replace('&#133;', '...', $str);
+		$str = str_replace('&#233;', 'é', $str);
+		$str = str_replace('&middot;', '·', $str);
+     
+        return $str;
+    }
     public function set_data(
         $name,
         $name_original,
@@ -109,15 +149,15 @@ class Movie
         $country,
         $budget)
     {
-        $this->name = $this->to_string($name);
-        $this->name_original = $this->to_string($name_original);
-        $this->description = $this->to_string($description);
+        $this->name = $this->to_string($this->str_remove_spec($name));
+        $this->name_original = $this->to_string($this->str_remove_spec($name_original));
+        $this->description = $this->to_string($this->str_remove_spec($description));
         $this->poster_url = $this->to_string($poster_url);
         $this->length_min = $this->to_int($length_min, -1);
         $this->year = $this->to_int($year, -1);
-        $this->directors_str = $this->to_string($directors_str);
+        $this->directors_str = $this->to_string($this->str_remove_spec($directors_str));
         $this->scenarios_str = $this->to_string($scenarios_str);
-        $this->actors_str = $this->to_string($actors_str);
+        $this->actors_str = $this->to_string($this->str_remove_spec($actors_str));
         $this->genres_str = $this->to_string($genres_str);
         $this->rate_imdb = $this->to_string($rate_imdb);
         $this->rate_kinopoisk = $this->to_string($rate_kinopoisk);

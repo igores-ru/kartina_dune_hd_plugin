@@ -36,20 +36,20 @@ class TvFavoritesScreen extends AbstractPreloadedRegularScreen
         $move_backward_favorite_action =
             UserInputHandlerRegistry::create_action(
                 $this, 'move_backward_favorite');
-        $move_backward_favorite_action['caption'] = 'Backward';
+        $move_backward_favorite_action['caption'] = 'Назад';
 
         $move_forward_favorite_action =
             UserInputHandlerRegistry::create_action(
                 $this, 'move_forward_favorite');
-        $move_forward_favorite_action['caption'] = 'Forward';
+        $move_forward_favorite_action['caption'] = 'Вперед';
 
         $remove_favorite_action =
             UserInputHandlerRegistry::create_action(
                 $this, 'remove_favorite');
-        $remove_favorite_action['caption'] = 'Favorite';
+        $remove_favorite_action['caption'] = 'Избранное';
 
         $menu_items[] = array(
-            GuiMenuItemDef::caption => 'Remove from Favorites',
+            GuiMenuItemDef::caption => 'Удалить из избранного',
             GuiMenuItemDef::action => $remove_favorite_action);
 
         $popup_menu_action = ActionFactory::show_popup_menu($menu_items);

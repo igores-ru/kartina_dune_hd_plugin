@@ -38,7 +38,7 @@ abstract class VodListScreen extends AbstractRegularScreen
             $add_favorite_action =
                 UserInputHandlerRegistry::create_action(
                     $this, 'add_favorite');
-            $add_favorite_action['caption'] = 'Favorite';
+            $add_favorite_action['caption'] = 'Мои фильмы';
 
             $popup_menu_action =
                 UserInputHandlerRegistry::create_action(
@@ -72,7 +72,7 @@ abstract class VodListScreen extends AbstractRegularScreen
             $add_favorite_action =
                 UserInputHandlerRegistry::create_action(
                     $this, 'add_favorite');
-            $caption = 'Add to My Movies';
+            $caption = 'Добавить в мои фильмы';
             $menu_items[] = array(
                 GuiMenuItemDef::caption => $caption,
                 GuiMenuItemDef::action => $add_favorite_action);
@@ -91,14 +91,14 @@ abstract class VodListScreen extends AbstractRegularScreen
             if ($is_favorite)
             {
                 return ActionFactory::show_title_dialog(
-                    'Movie already resides in My Movies');
+                    'Фильм уже есть в моих фильмах');
             }
             else
             {
                 $this->vod->add_favorite_movie($movie_id, $plugin_cookies);
 
                 return ActionFactory::show_title_dialog(
-                    'Movie has been added to My Movies');
+                    'Фильм добавлен в мои фильмы');
             }
         }
 

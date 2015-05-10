@@ -39,6 +39,7 @@ class DefaultArchive implements Archive
         else
         {
             $tok = strtok($doc, "\n");
+		//	hd_print("tok--->>> $tok");
             while ($tok !== false)
             {
                 $pos = strrpos($tok, ' ');
@@ -49,9 +50,11 @@ class DefaultArchive implements Archive
                 }
 
                 $name = trim(substr($tok, 0, $pos));
+			//	hd_print("name--->>> $name");
                 $version = trim(substr($tok, $pos + 1));
+			//	hd_print("version--->>> $version");
                 $version_by_name[$name] = $version;
-
+			//	hd_print("version_by_name--->>> $version_by_name[$name]");
                 $tok = strtok("\n");
             }
 

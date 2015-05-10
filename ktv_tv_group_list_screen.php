@@ -26,7 +26,7 @@ class KtvTvGroupListScreen extends TvGroupListScreen
                     (
                         'screen_id' => KtvVodRootScreen::ID,
                     )),
-            PluginRegularFolderItem::caption => 'Videoteka',
+            PluginRegularFolderItem::caption => 'Видеотека',
             PluginRegularFolderItem::view_item_params => array
             (
                 ViewItemParams::icon_path =>

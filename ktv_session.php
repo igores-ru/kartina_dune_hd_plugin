@@ -5,7 +5,8 @@ const ECODE_QUERY_LIMIT_EXCEEDED = 31;
 
 class KTV
 {
-    public static $SERVER = 'iptv-kartina.tv';
+    //public static $SERVER = 'iptv.kartina.tv';
+	public static $SERVER = 'iptv.kartina2.tv';
 }
 
 const KTV_LOGIN_URL =
@@ -47,9 +48,12 @@ const KTV_VOD_FAVSUB_URL=
 const KTV_VOD_GET_URL_URL =
     'http://mp4://%s/api/json/vod_geturl?%s=%s&fileid=%s';
 
-const KTV_ARCHIVE_URL_PREFIX = 'http://lubiteli.ru/ktv2';
+//const KTV_ARCHIVE_URL_PREFIX = 'http://lubiteli.ru/ktv2';	//http://iptv.kartina.tv/dune/data/images_v3/all.tgz //http://iptv.kartina.tv/dune/data/images_v3/list.txt
+const KTV_ARCHIVE_URL_PREFIX = 'http://igores.ru/dune/ktv';
 
 const KTV_ARCHIVE_ID = 'main';
+
+
 
 class KtvSession
 {
@@ -76,7 +80,6 @@ class KtvSession
         $this->http_opts = array (
             CURLOPT_FOLLOWLOCATION  => true,
             CURLOPT_MAXREDIRS       => 10,
-// debug            CURLOPT_PROXY           => '192.168.1.9:3128',
             CURLOPT_COOKIEFILE      => '/tmp/ktv.cookies',
             CURLOPT_COOKIEJAR       => '/tmp/ktv.cookies'
         );
@@ -370,9 +373,12 @@ class KtvSession
         $this->check_logged_in();
 
         if (substr($playback_url, 0, 12) === 'http://ts://')
+		{
             $playback_url = 'http://' . substr($playback_url, 12);
+		}
         else if (substr($playback_url, 0, 13) === 'http://mp4://')
             $playback_url = 'http://' . substr($playback_url, 13);
+		//hd_print("playback_url: --->>>$playback_url");
 
         try
         {
@@ -739,6 +745,8 @@ class KtvSession
         return DefaultArchive::get_archive(
             KTV_ARCHIVE_ID, KTV_ARCHIVE_URL_PREFIX);
     }
+	
+
 }
 
 ///////////////////////////////////////////////////////////////////////////

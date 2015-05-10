@@ -8,7 +8,9 @@ require_once 'lib/abstract_controls_screen.php';
 class KtvSetupScreen extends AbstractControlsScreen
 {
     const ID = 'setup';
-
+	
+	const EPG_FONTSIZE_DEF_VALUE	= 'normal';
+	private	$epg_font_size;
     ///////////////////////////////////////////////////////////////////////
 
     private $session;
@@ -21,12 +23,14 @@ class KtvSetupScreen extends AbstractControlsScreen
 
         $this->session = $session;
     }
-
+	//////////////////////////////////////////////////////////////////////
+	
+	//////////////////////////////////////////////////////////////////////
     private function get_http_caching_caption($value)
     {
         if ($value % 1000 == 0)
-            return sprintf('%d s', intval($value / 1000));
-         return sprintf('%.1f s', $value / 1000.0);
+            return sprintf('%d сек', intval($value / 1000));
+         return sprintf('%.1f сек', $value / 1000.0);
     }
 
     private function do_get_edit_pcode_defs()
@@ -35,15 +39,15 @@ class KtvSetupScreen extends AbstractControlsScreen
 
         $this->add_text_field($defs,
             'current_pcode', 'Текущий код:',
-            '', true, true, false, 1, 500);
+            '', true, true, false, 1, 500, 0);
 
         $this->add_text_field($defs,
             'new_pcode', 'Новый код:',
-            '', true, true, false, 1, 500);
+            '', true, true, false, 1, 500, 0);
 
         $this->add_text_field($defs,
             'new_pcode_copy', 'Подтвердить:',
-            '', true, true, false, 1, 500);
+            '', true, true, false, 1, 500, 0);
 
         $this->add_vgap($defs, 50);
 
@@ -69,7 +73,10 @@ class KtvSetupScreen extends AbstractControlsScreen
     private function do_get_control_defs(&$plugin_cookies)
     {
         $defs = array();
-
+		///////////////////////////////////////////////////////////////////
+		$epg_font_size = isset($plugin_cookies->epg_font_size) ? $plugin_cookies->epg_font_size : self::EPG_FONTSIZE_DEF_VALUE;///igores
+		$buf_time = isset($plugin_cookies->buf_time) ? $plugin_cookies->buf_time : 0;
+		////////////////////////////////////////////////////////////////////
         $user_name = isset($plugin_cookies->user_name) ?
             $plugin_cookies->user_name : '';
 
@@ -137,14 +144,14 @@ class KtvSetupScreen extends AbstractControlsScreen
             
             $bitrate= $settings->bitrate->value;
             $bitrate_caption = $bitrate;
-
+			
             $http_caching = $settings->http_caching->value;
 			$http_caching_caption = $http_caching;
 
             $timeshift = $settings->timeshift->value;
             $timeshift_caption = $timeshift;
         }
-
+		
         if ($logged_in)
         {
             $this->add_button($defs, 'edit_pcode', 'Код для закрытых каналов:',
@@ -165,14 +172,42 @@ class KtvSetupScreen extends AbstractControlsScreen
                 $bitrate, $bitrate_ops, 700, true);
 
             $http_caching_ops = array();
-#           foreach ($settings->http_caching->{"0"} as $v)
+//			array_unshift($settings->http_caching->list, "500");
+//			echo "<pre>"; print_r($settings->http_caching->list);
 			foreach ($settings->http_caching->list as $v)
                 $http_caching_ops[$v] = $this->get_http_caching_caption($v);
-            $this->add_combobox($defs,
+ /*           $this->add_combobox($defs,
                 'http_caching', 'Время буфферизации:',
                 $http_caching, $http_caching_ops, 700, true);
+*/
+			///////////////////////////////////////////////////////////////
+			$show_buf_time_ops = array();
 
-			
+				$show_buf_time_ops[0] = 'По умолчанию';
+				$show_buf_time_ops[500] = '0.5 с';
+				$show_buf_time_ops[1000] = '1 с';
+				$show_buf_time_ops[2000] = '2 с';
+				$show_buf_time_ops[3000] = '3 с';
+				$show_buf_time_ops[5000] = '5 с';
+				$show_buf_time_ops[10000] = '10 с';
+				$show_buf_time_ops[15000] = '15 с';
+				$show_buf_time_ops[20000] = '20 с';
+
+				$this->add_combobox
+				(
+					$defs,
+					'buf_time',
+					'Время буферизации:',
+					$buf_time, $show_buf_time_ops, 700, true
+				);
+			////////////////////////////////////////////////////////////////
+			$epg_font_size_ops = array();
+			$epg_font_size_ops ['normal'] = 'Обычный';
+			$epg_font_size_ops ['small'] = 'Мелкий';
+			$this->add_combobox($defs,
+				'epg_font_size', 'Размер шрифта EPG:', 
+				$epg_font_size, $epg_font_size_ops, 700, true);
+			///////////////////////////////////////////////////////////////
 
             $timeshift_ops = array();
             foreach ($settings->timeshift->list as $v)
@@ -320,12 +355,19 @@ class KtvSetupScreen extends AbstractControlsScreen
                     return $e->get_error_action();
                 }
             }
+			///////////////////////////////////////////////////
+			else if ($control_id == 'epg_font_size')
+				$plugin_cookies->epg_font_size = $new_value;
+			//////////////////////////////////////////////////
+			else if ($control_id == 'buf_time')
+				$plugin_cookies->buf_time = $new_value;
+			//////////////////////////////////////////////////
             else
                 return null;
 
             $need_reset_controls = true;
         }
-
+		
         if ($need_reset_controls)
         {
             $defs = $this->do_get_control_defs($plugin_cookies);

@@ -34,12 +34,14 @@ class VodSearchScreen extends AbstractControlsScreen
         $defs = array();
 
         $this->add_label($defs, null,
-            "Enter part of movie name:");
+            "Введите часть названия фильма или сериала:");
 
-        $this->add_text_field($defs, 'pattern', null,
-            $pattern, false, false, true, false,
-            500, true, true);
-
+		 $this->add_text_field($defs,
+                'pattern', "",
+                $pattern, 0, 0, 1,
+                true, 1300, 0, true
+        );
+		ControlFactory::add_vgap($defs, 500);
         return $defs;
     }
 

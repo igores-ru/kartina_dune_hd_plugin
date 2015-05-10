@@ -37,11 +37,11 @@ class KtvTv extends AbstractTv
     protected function load_channels(&$plugin_cookies)
     {
         $this->session->check_logged_in();
-
+		$buf_time = isset($plugin_cookies->buf_time) ? $plugin_cookies->buf_time : 0;
         $settings = $this->session->get_settings();
         $buffering_ms = $settings->http_caching->value;
         $default_timeshift_hours = $settings->timeshift->value;
-
+		//hd_print("buffering_ms --->>> $buffering_ms");
         $this->channels = new HashedArray();
         $this->groups = new HashedArray();
 
@@ -86,7 +86,7 @@ class KtvTv extends AbstractTv
                     $c->name,
                     $this->session->get_channel_icon($c->id),
                     $have_archive, $is_protected,
-                    $buffering_ms, $timeshift_hours);
+					$buf_time, $timeshift_hours);
                 $this->channels->put($ktv_channel);
 
                 $ktv_channel->add_group($ktv_group);
@@ -108,7 +108,6 @@ class KtvTv extends AbstractTv
     public function get_tv_info(MediaURL $media_url, &$plugin_cookies)
     {
         $this->session->ensure_logged_in($plugin_cookies);
-
         return parent::get_tv_info($media_url, &$plugin_cookies);
     }
 
@@ -122,6 +121,7 @@ class KtvTv extends AbstractTv
 
     public function get_tv_playback_url($channel_id, $archive_ts, $protect_code, &$plugin_cookies)
     {
+		$buf_time = isset($plugin_cookies->buf_time) ? $plugin_cookies->buf_time : 0;
         $this->ensure_channels_loaded($plugin_cookies);
 
         $url = sprintf(KTV_GET_URL_URL,
@@ -129,12 +129,13 @@ class KtvTv extends AbstractTv
             $this->session->get_sid_name(),
             $this->session->get_sid(),
             $channel_id);
-
+		
         if (intval($archive_ts) > 0)
             $url .= "&gmt=$archive_ts";
         if (isset($protect_code) && $protect_code !== '')
             $url .= "&protect_code=$protect_code";
-
+		$url .= "|||dune_params|||buffering_ms:$buf_time";
+		hd_print("url: --->>>$url");
         return $url;
     }
 
@@ -212,7 +213,7 @@ class KtvTv extends AbstractTv
                         (
                             'screen_id' => KtvVodRootScreen::ID,
                         )),
-                PluginRegularFolderItem::caption => 'Videoteka',
+                PluginRegularFolderItem::caption => 'Видеотека',
                 PluginRegularFolderItem::view_item_params => array
                 (
                     ViewItemParams::icon_path =>

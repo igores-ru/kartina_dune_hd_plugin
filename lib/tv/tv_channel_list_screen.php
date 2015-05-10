@@ -48,7 +48,7 @@ class TvChannelListScreen extends AbstractPreloadedRegularScreen
             $add_favorite_action =
                 UserInputHandlerRegistry::create_action(
                     $this, 'add_favorite');
-            $add_favorite_action['caption'] = 'Favorite';
+            $add_favorite_action['caption'] = 'Избранное';
 
             $popup_menu_action =
                 UserInputHandlerRegistry::create_action(
@@ -116,7 +116,7 @@ class TvChannelListScreen extends AbstractPreloadedRegularScreen
             $add_favorite_action =
                 UserInputHandlerRegistry::create_action(
                     $this, 'add_favorite');
-            $caption = 'Add to Favorites';
+            $caption = 'Добавить в Избранное';
             $menu_items[] = array(
                 GuiMenuItemDef::caption => $caption,
                 GuiMenuItemDef::action => $add_favorite_action);
@@ -135,7 +135,7 @@ class TvChannelListScreen extends AbstractPreloadedRegularScreen
             if ($is_favorite)
             {
                 return ActionFactory::show_title_dialog(
-                    'Channel already resides in Favorites',
+                    'Канал уже находится в Избранном',
                     $this->get_sel_item_update_action(
                         $user_input, $plugin_cookies));
             }
@@ -145,7 +145,7 @@ class TvChannelListScreen extends AbstractPreloadedRegularScreen
                     $channel_id, $plugin_cookies);
 
                 return ActionFactory::show_title_dialog(
-                    'Channel has been added to Favorites',
+                    'Канал успешно добавлен в Избранное',
                     $this->get_sel_item_update_action(
                         $user_input, $plugin_cookies));
             }

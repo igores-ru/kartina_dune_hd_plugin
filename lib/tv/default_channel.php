@@ -58,7 +58,7 @@ class DefaultChannel implements Channel
     { return 16* 60; }
 
     public function get_buffering_ms()
-    { return 0; }
+    { return 500; }
 
     public function get_timeshift_hours()
     { return 0; }

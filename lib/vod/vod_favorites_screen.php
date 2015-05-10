@@ -41,10 +41,10 @@ class VodFavoritesScreen extends AbstractPreloadedRegularScreen
         $remove_favorite_action =
             UserInputHandlerRegistry::create_action(
                 $this, 'remove_favorite');
-        $remove_favorite_action['caption'] = 'Favorite';
+        $remove_favorite_action['caption'] = 'Мои фильмы';
 
         $menu_items[] = array(
-            GuiMenuItemDef::caption => 'Remove from My Movies',
+            GuiMenuItemDef::caption => 'Удалить из моих фильмов',
             GuiMenuItemDef::action => $remove_favorite_action);
 
         $popup_menu_action = ActionFactory::show_popup_menu($menu_items);

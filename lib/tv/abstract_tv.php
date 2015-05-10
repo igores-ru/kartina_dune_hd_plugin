@@ -137,7 +137,7 @@ abstract class AbstractTv implements Tv
 
                     PluginTvChannel::buffering_ms => intval($c->get_buffering_ms()),
                     PluginTvChannel::timeshift_hours => intval($c->get_timeshift_hours()),
-
+					
                     PluginTvChannel::playback_url_is_stream_url =>
                         $this->playback_url_is_stream_url,
                 ));
@@ -206,6 +206,8 @@ abstract class AbstractTv implements Tv
             PluginTvInfo::favorite_channel_ids => $fav_channel_ids,
 
             PluginTvInfo::archive => $archive_def,
+			
+			PluginTvInfo::epg_font_size => ($plugin_cookies->epg_font_size <> KtvSetupScreen::EPG_FONTSIZE_DEF_VALUE)? PLUGIN_FONT_SMALL : PLUGIN_FONT_NORMAL,///igores
         );
     }
 

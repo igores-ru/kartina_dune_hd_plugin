@@ -29,19 +29,19 @@ class KtvVodRootScreen extends AbstractPreloadedRegularScreen
         $defs = array(
             array(
                 KtvVodListScreen::get_media_url_str('last'),
-                'Last', 'mov_last.png'),
+                'Последнее', 'mov_last.png'),
             array(
                 KtvVodListScreen::get_media_url_str('best'),
-                'Best', 'mov_best.png'),
+                'Лучшие', 'mov_best.png'),
             array(
                 VodFavoritesScreen::get_media_url_str(),
-                'My Movies', 'mov_favorites.png'),
+                'Мои фильмы', 'mov_favorites.png'),
             array(
                 VodGenresScreen::get_media_url_str(),
-                'Genres', 'mov_genres.png'),
+                'Жанры', 'mov_genres.png'),
             array(
                 VodSearchScreen::get_media_url_str(),
-                'Search', 'mov_search.png')
+                'Поиск', 'mov_search.png')
         );
 
         $items = array();
