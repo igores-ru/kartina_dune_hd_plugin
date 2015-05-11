@@ -165,33 +165,25 @@ class KtvSetupScreen extends AbstractControlsScreen
                 $stream_server, $stream_server_ops, 700, true);
 
             $bitrate_ops = array();
-            foreach ($settings->bitrate->list as $v)
+			foreach ($settings->bitrate->list as $v)
                 $bitrate_ops[$v] = $v;
             $this->add_combobox($defs,
                 'bitrate', 'Битрейт:',
                 $bitrate, $bitrate_ops, 700, true);
 
             $http_caching_ops = array();
-//			array_unshift($settings->http_caching->list, "500");
-//			echo "<pre>"; print_r($settings->http_caching->list);
 			foreach ($settings->http_caching->list as $v)
                 $http_caching_ops[$v] = $this->get_http_caching_caption($v);
- /*           $this->add_combobox($defs,
-                'http_caching', 'Время буфферизации:',
-                $http_caching, $http_caching_ops, 700, true);
-*/
 			///////////////////////////////////////////////////////////////
 			$show_buf_time_ops = array();
 
 				$show_buf_time_ops[0] = 'По умолчанию';
 				$show_buf_time_ops[500] = '0.5 с';
-				$show_buf_time_ops[1000] = '1 с';
-				$show_buf_time_ops[2000] = '2 с';
+				$show_buf_time_ops[1500] = '1,5 с';
 				$show_buf_time_ops[3000] = '3 с';
 				$show_buf_time_ops[5000] = '5 с';
-				$show_buf_time_ops[10000] = '10 с';
+				$show_buf_time_ops[8000] = '8 с';
 				$show_buf_time_ops[15000] = '15 с';
-				$show_buf_time_ops[20000] = '20 с';
 
 				$this->add_combobox
 				(
