@@ -32,17 +32,14 @@ class VodSearchScreen extends AbstractControlsScreen
             $pattern = $plugin_cookies->vod_search_pattern;
 
         $defs = array();
-
-        $this->add_label($defs, null,
-            "Введите часть названия фильма или сериала:");
-
-		 $this->add_text_field($defs,
+		ControlFactory::add_vgap($defs, 50);
+        ControlFactory::add_label($defs, "            ", "Введите часть названия фильма или сериала:");
+		$this->add_text_field($defs,
                 'pattern', "",
                 $pattern, 0, 0, 1,
                 true, 1300, 0, true
         );
-		ControlFactory::add_vgap($defs, 500);
-        return $defs;
+		return $defs;
     }
 
     public function get_control_defs(MediaURL $media_url, &$plugin_cookies)
